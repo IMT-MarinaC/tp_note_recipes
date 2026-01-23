@@ -15,12 +15,24 @@ class MealRepositoryImpl(
 ) : MealRepository {
 
     override suspend fun getAllMealsFromCategory(categoryName: String): Flow<Result<List<MealPreview>>> =
-            flow {
-                val response = apiService.searchCategory(categoryName)
-                emit(Result.success(response.toDomain()))
-            }.catch { throwable ->
-                emit(Result.failure(throwable))
-            }
+        flow {
+            val response = apiService.searchCategory(categoryName)
+            emit(Result.success(response.toDomain()))
+        }.catch { throwable ->
+            emit(Result.failure(throwable))
+        }
+
+    override suspend fun getMealById(mealId: String): Result<Meal> {
+        return try {
+            val response = apiService.getMealById(mealId)  // MealListResponse
+            val meal = response.meals.firstOrNull()?.toDomain()
+                ?: throw Exception("Meal introuvable")
+            Result.success(meal)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
 
     override suspend fun searchMeals(meal: String): Flow<Result<List<Meal>>> =
         flow {

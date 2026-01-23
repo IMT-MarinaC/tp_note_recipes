@@ -11,10 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import marina.carbone.tp_note_marina_carbone.domain.model.Meal
+import marina.carbone.tp_note_marina_carbone.domain.model.MealPreview
 
 @Composable
-fun MealItem(meal: Meal, onClick: () -> Unit) {
+fun MealPreviewItem(meal: MealPreview, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -22,7 +22,7 @@ fun MealItem(meal: Meal, onClick: () -> Unit) {
             .border(1.dp, Color.Black),
         verticalAlignment = Alignment.CenterVertically,
 
-    )  {
+        ) {
         Text(
             text = meal.name,
             modifier = Modifier

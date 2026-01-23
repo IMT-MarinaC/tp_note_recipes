@@ -1,4 +1,4 @@
-package marina.carbone.tp_note_marina_carbone.ui.home
+package marina.carbone.tp_note_marina_carbone.ui.route.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,7 +12,7 @@ import marina.carbone.tp_note_marina_carbone.domain.repository.CategoryRepositor
 
 class HomeViewModel(
     private val categoryRepository: CategoryRepository = CategoryRepositoryImpl()
-): ViewModel() {
+) : ViewModel() {
 
     private val _state: MutableStateFlow<HomeState> = MutableStateFlow(HomeState())
     val state: StateFlow<HomeState>
@@ -59,43 +59,43 @@ class HomeViewModel(
         }
     }
 
-/*
-    private fun search() {
-        viewModelScope.launch {
-            _state.value.searchText?.let { it ->
-                _state.update { state ->
-                    state.copy(isLoading = true)
-                }
-                categoryRepository.findMeal(it).collect { result ->
-                    result.fold(
-                        onSuccess = { cat ->
-                            _state.update { state ->
-                                state.copy(categories = cat, isLoading = false)
+    /*
+        private fun search() {
+            viewModelScope.launch {
+                _state.value.searchText?.let { it ->
+                    _state.update { state ->
+                        state.copy(isLoading = true)
+                    }
+                    categoryRepository.findMeal(it).collect { result ->
+                        result.fold(
+                            onSuccess = { cat ->
+                                _state.update { state ->
+                                    state.copy(categories = cat, isLoading = false)
+                                }
+                            },
+                            onFailure = { error ->
+                                _state.update {
+                                    it.copy(
+                                        categories = emptyList(),
+                                        isLoading = false,
+                                        errorMessage = error.message ?: "Erreur inconnue"
+                                    )
+                                }
                             }
-                        },
-                        onFailure = { error ->
-                            _state.update {
-                                it.copy(
-                                    categories = emptyList(),
-                                    isLoading = false,
-                                    errorMessage = error.message ?: "Erreur inconnue"
-                                )
-                            }
-                        }
-                    )
+                        )
+
+                    }
 
                 }
-
             }
         }
-    }
 
- */
+     */
 
 
 }
 
 sealed interface HomeUIEvent {
     data class ChangeSearchText(val searchText: String) : HomeUIEvent
-    data object SubmitSearch: HomeUIEvent
+    data object SubmitSearch : HomeUIEvent
 }

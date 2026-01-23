@@ -1,4 +1,4 @@
-package marina.carbone.tp_note_marina_carbone.ui.home
+package marina.carbone.tp_note_marina_carbone.ui.route.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

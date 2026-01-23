@@ -1,4 +1,4 @@
-package marina.carbone.tp_note_marina_carbone.ui.home
+package marina.carbone.tp_note_marina_carbone.ui.route.home
 
 import marina.carbone.tp_note_marina_carbone.domain.model.Category
 

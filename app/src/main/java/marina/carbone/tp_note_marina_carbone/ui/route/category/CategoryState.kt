@@ -1,4 +1,4 @@
-package marina.carbone.tp_note_marina_carbone.ui.category
+package marina.carbone.tp_note_marina_carbone.ui.route.category
 
 import marina.carbone.tp_note_marina_carbone.domain.model.MealPreview
 

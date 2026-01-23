@@ -15,17 +15,18 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import marina.carbone.tp_note_marina_carbone.ui.category_detail.CategoryScreen
-import marina.carbone.tp_note_marina_carbone.ui.home.HomeScreen
-import marina.carbone.tp_note_marina_carbone.ui.home.HomeViewModel
-import marina.carbone.tp_note_marina_carbone.ui.theme.DogbreedsTheme
+import marina.carbone.tp_note_marina_carbone.ui.route.category.CategoryScreen
+import marina.carbone.tp_note_marina_carbone.ui.route.home.HomeScreen
+import marina.carbone.tp_note_marina_carbone.ui.route.home.HomeViewModel
+import marina.carbone.tp_note_marina_carbone.ui.route.meal.MealScreen
+import marina.carbone.tp_note_marina_carbone.ui.theme.Theme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            DogbreedsTheme {
+            Theme {
                 val navController = rememberNavController()
                 Scaffold { paddingValues ->
                     NavHost(
@@ -41,14 +42,13 @@ class MainActivity : ComponentActivity() {
                                 //onEvent = homeViewModel::onEvent,
                                 state = homeState,
                                 onCategoryClick = { cat ->
-                                    navController.navigate("detail/${cat.categoryName}")
+                                    navController.navigate("category/${cat.categoryName}")
                                 }
                             )
                         }
 
-
                         composable(
-                            route = "detail/{categoryName}",
+                            route = "category/{categoryName}",
                             arguments = listOf(
                                 navArgument("categoryName") { type = NavType.StringType }
                             )
@@ -57,7 +57,25 @@ class MainActivity : ComponentActivity() {
                                 backStackEntry.arguments?.getString("categoryName").orEmpty()
 
                             CategoryScreen(
-                                categoryName
+                                categoryName,
+                                viewModel = viewModel(),
+                                onMealClick = { mealPreview ->
+                                    navController.navigate("meal/${mealPreview.id}")
+                                }
+                            )
+                        }
+
+                        composable(
+                            route = "meal/{mealId}",
+                            arguments = listOf(
+                                navArgument("mealId") { type = NavType.StringType }
+                            )
+                        ) { backStackEntry ->
+                            val mealId =
+                                backStackEntry.arguments?.getString("mealId").orEmpty()
+
+                            MealScreen(
+                                mealId
                             )
                         }
 
