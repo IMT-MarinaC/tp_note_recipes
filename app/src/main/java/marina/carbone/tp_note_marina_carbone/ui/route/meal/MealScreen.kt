@@ -26,14 +26,14 @@ fun MealScreen(
     mealId: String,
     viewModel: MealViewModel = viewModel()
 ) {
-    val meal by viewModel.meal.collectAsState()
+    val mealState by viewModel.meal.collectAsState()
 
     LaunchedEffect(mealId) {
         viewModel.loadMealById(mealId)
     }
 
     when {
-        meal.isLoading -> {
+        mealState.isLoading -> {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -42,16 +42,21 @@ fun MealScreen(
             }
         }
 
-        meal.errorMessage != null -> {
+        mealState.errorMessage != null -> {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Text(text = meal.errorMessage.toString())
+                Text(
+                    text = mealState.errorMessage ?: "Erreur inconnue",
+                    style = MaterialTheme.typography.bodyLarge
+                )
             }
         }
 
-        meal.meal != null -> {
+        mealState.meal != null -> {
+            val meal = mealState.meal ?: return
+
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
@@ -60,20 +65,10 @@ fun MealScreen(
             ) {
                 item {
                     Text(
-                        text = meal.meal!!.name,
+                        text = meal.name,
                         style = MaterialTheme.typography.titleLarge,
                         fontSize = 28.sp
                     )
-                }
-
-                item {
-                    /*Image(
-                        painter = rememberAsyncImagePainter(state.meal.thumbnail),
-                        contentDescription = state.meal.name,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp)
-                    )*/
                 }
 
                 item {
@@ -83,7 +78,7 @@ fun MealScreen(
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = meal.meal!!.instructions ?: "Pas d'instructions disponibles",
+                        text = meal.instructions,
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
@@ -93,16 +88,23 @@ fun MealScreen(
                         text = "Ingrédients",
                         style = MaterialTheme.typography.titleMedium
                     )
-                    Spacer(modifier = Modifier.height(4.dp))
                 }
 
-
-                items(meal.meal!!.ingredients) { ingredient ->
+                items(meal.ingredients) { ingredient ->
                     Text(
                         text = "${ingredient.name} - ${ingredient.measure}",
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
+            }
+        }
+
+        else -> {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text("Aucune donnée")
             }
         }
     }
