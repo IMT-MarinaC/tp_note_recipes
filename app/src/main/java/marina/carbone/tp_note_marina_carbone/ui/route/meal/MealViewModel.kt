@@ -19,12 +19,10 @@ class MealViewModel(
 
     fun loadMealById(mealId: String) {
         viewModelScope.launch {
-            _meal.update { it.copy(isLoading = true, errorMessage = null) }
-
             val result = mealRepository.getMealById(mealId)
             result
-                .onSuccess { m ->
-                    _meal.update { it.copy(meal = m, isLoading = false, errorMessage = null) }
+                .onSuccess { meal ->
+                    _meal.update { it.copy(meal = meal, isLoading = false, errorMessage = null) }
                 }
                 .onFailure {
                     _meal.update {

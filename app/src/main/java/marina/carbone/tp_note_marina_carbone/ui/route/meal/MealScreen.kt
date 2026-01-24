@@ -48,7 +48,7 @@ fun MealScreen(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = mealState.errorMessage ?: "Erreur inconnue",
+                    text = mealState.errorMessage ?: "Erreur inconnue :/",
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
