@@ -33,7 +33,6 @@ val Typography = Typography(
         fontFamily = Oswald,
         fontWeight = FontWeight.Bold,
         fontSize = 36.sp,
-        //lineHeight = 40.sp,
         letterSpacing = 2.sp
     ),
 
