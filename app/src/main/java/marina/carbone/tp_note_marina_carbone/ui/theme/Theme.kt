@@ -17,12 +17,12 @@ private val DarkColorScheme = darkColorScheme(
     tertiary = GreenDark,
 
     //Other default colors to override
-    background = Color(darkInt),
+    background = Color(darkLong),
     surface = Color(0xFFFFFFF8),
     onPrimary = Color.Red,
     onSecondary = Color.Blue,
     onTertiary = Color.Green,
-    onBackground = Color(greenDarkInt),
+    onBackground = Color(greenDarkLong),
     onSurface = Color(0xFF1C1B1F),
 )
 
@@ -31,13 +31,13 @@ private val LightColorScheme = lightColorScheme(
     secondary = White,
     tertiary = Dark,
 
-    background = Color(whiteInt),
-    surface = Color(greenDarkInt),
-    onPrimary = Color(whiteInt),
-    onSecondary = Color(darkInt),
-    onTertiary = Color(whiteInt),
-    onBackground = Color(darkInt),
-    onSurface = Color(whiteInt),
+    background = Color(whiteLong),
+    surface = Color(greenDarkLong),
+    onPrimary = Color(whiteLong),
+    onSecondary = Color(darkLong),
+    onTertiary = Color(whiteLong),
+    onBackground = Color(darkLong),
+    onSurface = Color(whiteLong),
 
     )
 

@@ -17,19 +17,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import marina.carbone.tp_note_marina_carbone.domain.model.Category
 import marina.carbone.tp_note_marina_carbone.ui.component.CategoryItem
-import marina.carbone.tp_note_marina_carbone.ui.theme.greenDarkInt
+import marina.carbone.tp_note_marina_carbone.ui.theme.darkLong
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     state: HomeState,
-    onCategoryClick: (Category) -> Unit
+    onCategoryClick: (category: Category) -> Unit
 ) {
 
     Surface(
         modifier = modifier
             .fillMaxSize(),
-        color = Color(greenDarkInt)
+        color = Color(darkLong)
     ) {
 
         Column(
@@ -38,7 +38,6 @@ fun HomeScreen(
                 .padding(8.dp)
 
         ) {
-
             Column(
                 modifier = Modifier.padding(bottom = 32.dp)
             ) {
@@ -52,14 +51,14 @@ fun HomeScreen(
                 Text(text = state.errorMessage)
             } else {
                 LazyVerticalStaggeredGrid(
-                    columns = StaggeredGridCells.Fixed(2), // 2 colonnes, tu peux mettre Adaptive si tu veux
+                    columns = StaggeredGridCells.Fixed(2),
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(2.dp)
+                    contentPadding = PaddingValues(6.dp)
                 ) {
-                    items(state.categories) { cat ->
+                    items(state.categories) { category ->
                         CategoryItem(
-                            category = cat,
-                            onClick = { onCategoryClick(cat) }
+                            category = category,
+                            onClick = { onCategoryClick(category) }
                         )
                     }
                 }

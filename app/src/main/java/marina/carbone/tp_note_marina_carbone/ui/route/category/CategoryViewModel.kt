@@ -1,5 +1,6 @@
 package marina.carbone.tp_note_marina_carbone.ui.route.category
 
+import CategoryUIEvent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,12 +15,40 @@ class CategoryViewModel(
     private val mealRepository: MealRepository = MealRepositoryImpl(),
 ) : ViewModel() {
 
-    private val _meals = MutableStateFlow(CategoryState())
-    val meals: StateFlow<CategoryState> = _meals.asStateFlow()
+    private val _state = MutableStateFlow(CategoryState())
+    val state: StateFlow<CategoryState> = _state.asStateFlow()
 
-    fun loadMealsByCategory(categoryName: String) {
+    fun sendUIEvent(event: CategoryUIEvent) {
+        when (event) {
+
+            is CategoryUIEvent.LoadMeals -> loadMealsByCategory(event.categoryName)
+
+            is CategoryUIEvent.SearchChanged ->
+                _state.update {
+                    it.copy(searchText = event.text)
+                }
+
+            CategoryUIEvent.ToggleSort ->
+                _state.update {
+                    it.copy(
+                        sortType = when (it.sortType) {
+                            SortType.ALPHABETICAL_ASC ->
+                                SortType.ALPHABETICAL_DESC
+
+                            SortType.ALPHABETICAL_DESC ->
+                                SortType.ALPHABETICAL_ASC
+                        }
+                    )
+                }
+
+            is CategoryUIEvent.MealClicked -> Unit
+        }
+    }
+
+
+    private fun loadMealsByCategory(categoryName: String) {
         viewModelScope.launch {
-            _meals.update {
+            _state.update {
                 it.copy(isLoading = true, errorMessage = null)
             }
 
@@ -28,7 +57,7 @@ class CategoryViewModel(
                 .collect { result ->
                     result
                         .onSuccess { meals ->
-                            _meals.update {
+                            _state.update {
                                 it.copy(
                                     meals = meals,
                                     isLoading = false,
@@ -37,7 +66,7 @@ class CategoryViewModel(
                             }
                         }
                         .onFailure {
-                            _meals.update {
+                            _state.update {
                                 it.copy(
                                     isLoading = false,
                                     errorMessage = "Erreur de chargement"
@@ -47,4 +76,5 @@ class CategoryViewModel(
                 }
         }
     }
+
 }
