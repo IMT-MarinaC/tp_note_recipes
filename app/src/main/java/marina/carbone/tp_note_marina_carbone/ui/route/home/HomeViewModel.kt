@@ -58,41 +58,6 @@ class HomeViewModel(
             }
         }
     }
-
-    /*
-        private fun search() {
-            viewModelScope.launch {
-                _state.value.searchText?.let { it ->
-                    _state.update { state ->
-                        state.copy(isLoading = true)
-                    }
-                    categoryRepository.findMeal(it).collect { result ->
-                        result.fold(
-                            onSuccess = { cat ->
-                                _state.update { state ->
-                                    state.copy(categories = cat, isLoading = false)
-                                }
-                            },
-                            onFailure = { error ->
-                                _state.update {
-                                    it.copy(
-                                        categories = emptyList(),
-                                        isLoading = false,
-                                        errorMessage = error.message ?: "Erreur inconnue"
-                                    )
-                                }
-                            }
-                        )
-
-                    }
-
-                }
-            }
-        }
-
-     */
-
-
 }
 
 sealed interface HomeUIEvent {
