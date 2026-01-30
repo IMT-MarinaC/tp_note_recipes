@@ -1,7 +1,7 @@
 package marina.carbone.tp_note_marina_carbone.ui.route.category
 
-import CategoryUIEvent
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,6 +25,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -34,9 +35,7 @@ import marina.carbone.tp_note_marina_carbone.ui.component.MealPreviewItem
 import marina.carbone.tp_note_marina_carbone.ui.theme.Dark
 import marina.carbone.tp_note_marina_carbone.ui.theme.LightDark
 import marina.carbone.tp_note_marina_carbone.ui.theme.White
-import marina.carbone.tp_note_marina_carbone.ui.theme.darkLong
 import marina.carbone.tp_note_marina_carbone.ui.theme.greenDarkLong
-
 
 @Composable
 fun CategoryScreen(
@@ -45,6 +44,7 @@ fun CategoryScreen(
     viewModel: CategoryViewModel = viewModel(),
     onMealClick: (mealPreview: MealPreview) -> Unit
 ) {
+
     val state by viewModel.state.collectAsState()
 
     val filteredMeals = remember(state) {
@@ -61,11 +61,10 @@ fun CategoryScreen(
     }
 
 
-
     Surface(
         modifier = modifier
             .fillMaxSize(),
-        color = Color(greenDarkLong)
+        color = Dark
     ) {
 
 
@@ -122,24 +121,34 @@ fun CategoryScreen(
                 )
             )
 
-            Button(
-                onClick = {
-                    viewModel.sendUIEvent(CategoryUIEvent.ToggleSort)
-                },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(darkLong)
-                )
+            Row(
+                modifier = Modifier
+                    .padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = if (state.sortType == SortType.ALPHABETICAL_ASC)
-                        "A → Z"
-                    else
-                        "Z → A"
+                    "Filtre : ",
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier
+                        .padding(end = 8.dp)
                 )
+
+                Button(
+                    onClick = {
+                        viewModel.sendUIEvent(CategoryUIEvent.ToggleSort)
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(greenDarkLong)
+                    )
+                ) {
+                    Text(
+                        text = if (state.sortType == SortType.ALPHABETICAL_ASC)
+                            "A → Z"
+                        else
+                            "Z → A"
+                    )
+                }
             }
-
-
-
 
             LazyVerticalStaggeredGrid(
                 columns = StaggeredGridCells.Fixed(2),

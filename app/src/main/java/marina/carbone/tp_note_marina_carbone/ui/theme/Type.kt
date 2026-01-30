@@ -43,6 +43,13 @@ val Typography = Typography(
         fontSize = 20.sp,
     ),
 
+    titleSmall = TextStyle(
+        fontFamily = Oswald,
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp,
+        letterSpacing = 2.sp
+    ),
+
     headlineMedium = TextStyle(
         fontFamily = PlayfairDisplay,
         fontWeight = FontWeight.Normal,

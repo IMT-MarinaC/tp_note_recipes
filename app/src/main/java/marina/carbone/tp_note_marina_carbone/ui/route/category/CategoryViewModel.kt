@@ -1,6 +1,5 @@
 package marina.carbone.tp_note_marina_carbone.ui.route.category
 
-import CategoryUIEvent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,6 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import marina.carbone.tp_note_marina_carbone.data.repository.MealRepositoryImpl
+import marina.carbone.tp_note_marina_carbone.domain.model.MealPreview
 import marina.carbone.tp_note_marina_carbone.domain.repository.MealRepository
 
 class CategoryViewModel(
@@ -78,3 +78,15 @@ class CategoryViewModel(
     }
 
 }
+
+sealed interface CategoryUIEvent {
+
+    data class LoadMeals(val categoryName: String) : CategoryUIEvent
+
+    data class SearchChanged(val text: String) : CategoryUIEvent
+
+    object ToggleSort : CategoryUIEvent
+
+    data class MealClicked(val meal: MealPreview) : CategoryUIEvent
+}
+

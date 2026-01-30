@@ -1,7 +1,6 @@
 package marina.carbone.tp_note_marina_carbone.data.network
 
 import marina.carbone.tp_note_marina_carbone.data.network.dot.response.CategoryListResponse
-import marina.carbone.tp_note_marina_carbone.data.network.dot.response.MealByCategoryResponse
 import marina.carbone.tp_note_marina_carbone.data.network.dot.response.MealListByCategoryResponse
 import marina.carbone.tp_note_marina_carbone.data.network.dot.response.MealListResponse
 import marina.carbone.tp_note_marina_carbone.data.network.dot.response.MealResponse
@@ -36,7 +35,7 @@ fun MealListByCategoryResponse.toDomain(): List<MealPreview> {
         MealPreview(
             id = it.id,
             name = it.name,
-            thumbnail = it.thumbnail
+            thumbnail = it.thumbnail,
         )
     }
 }
