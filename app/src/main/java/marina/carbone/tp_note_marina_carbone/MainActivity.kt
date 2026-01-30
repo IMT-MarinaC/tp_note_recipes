@@ -54,7 +54,6 @@ class MainActivity : ComponentActivity() {
                             val homeState by homeViewModel.state.collectAsState()
 
                             HomeScreen(
-                                //modifier = Modifier.Companion.padding(paddingValues),
                                 state = homeState,
                                 onCategoryClick = { cat ->
                                     navController.navigate("category/${cat.categoryName}")
@@ -76,9 +75,11 @@ class MainActivity : ComponentActivity() {
                                 categoryName,
                                 viewModel = viewModel(),
                                 onMealClick = { mealPreview ->
-                                    navController.navigate("meal/${mealPreview.id}")
-                                }
+                                    navController.navigate("meal/${mealPreview.id}?title=${mealPreview.name}")
+                                },
+                                onNavigateBack = { navController.popBackStack() }
                             )
+
                         }
 
                         composable(
@@ -89,9 +90,9 @@ class MainActivity : ComponentActivity() {
                         ) { backStackEntry ->
                             val mealId =
                                 backStackEntry.arguments?.getString("mealId").orEmpty()
-
                             MealScreen(
-                                mealId
+                                mealId,
+                                onNavigateBack = { navController.popBackStack() }
                             )
                         }
 

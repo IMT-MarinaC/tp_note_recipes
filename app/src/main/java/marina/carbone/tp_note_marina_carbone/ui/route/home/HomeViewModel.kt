@@ -23,26 +23,6 @@ class HomeViewModel(
         loadAllCategories()
     }
 
-    /*
-
-    fun onEvent(event: HomeUIEvent) {
-        when(event) {
-            is HomeUIEvent.ChangeSearchText -> updateSearchText(event.searchText)
-            is HomeUIEvent.SubmitSearch -> {
-                println("SubmitSearch clicked, searchText=${_state.value.searchText}")
-                search()
-            }
-        }
-    }
-
-    private fun updateSearchText(searchText: String) {
-        _state.update {
-            it.copy(searchText = searchText)
-        }
-    }
-
-     */
-
     private fun loadAllCategories() {
         viewModelScope.launch {
             categoryRepository.getAllCategories().collect { result ->

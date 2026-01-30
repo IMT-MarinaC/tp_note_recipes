@@ -31,7 +31,7 @@ fun CategoryItem(
         modifier = Modifier
             .padding(2.dp)
             .fillMaxWidth()
-            .height((200 + category.categoryName.hashCode() % 100).absoluteValue.dp) // hauteur pseudo-unique selon la catégorie
+            .height((200 + category.categoryName.hashCode() % 100).absoluteValue.dp)
             .clickable { onClick() },
         color = Color.LightGray
     ) {

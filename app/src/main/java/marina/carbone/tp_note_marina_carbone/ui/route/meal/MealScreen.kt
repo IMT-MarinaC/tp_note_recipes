@@ -1,6 +1,7 @@
 package marina.carbone.tp_note_marina_carbone.ui.route.meal
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,15 +32,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import marina.carbone.tp_note_marina_carbone.ui.component.InfoTag
 import marina.carbone.tp_note_marina_carbone.ui.component.IngredientCardItem
+import marina.carbone.tp_note_marina_carbone.ui.theme.Dark
 
 @Composable
 fun MealScreen(
     mealId: String,
-    viewModel: MealViewModel = viewModel()
+    viewModel: MealViewModel = viewModel(),
+    onNavigateBack: () -> Unit
 ) {
     val mealState by viewModel.meal.collectAsState()
 
@@ -79,6 +83,17 @@ fun MealScreen(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 contentPadding = PaddingValues(bottom = 72.dp)
             ) {
+                item {
+                    Text(
+                        text = "←",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontSize = 32.sp,
+                        color = Dark,
+                        modifier = Modifier
+                            .clickable { onNavigateBack() }
+                            .padding(8.dp)
+                    )
+                }
                 item {
                     Box {
                         AsyncImage(
@@ -174,7 +189,6 @@ fun MealScreen(
                                         trimmedLine.contains("étape", ignoreCase = true)
 
                                 if (isStep) {
-                                    // ligne titre, pas de checkbox
                                     Text(
                                         text = trimmedLine,
                                         style = MaterialTheme.typography.bodyMedium,
@@ -182,7 +196,6 @@ fun MealScreen(
                                         modifier = Modifier.padding(vertical = 4.dp)
                                     )
                                 } else {
-                                    // ligne normale avec checkbox
                                     val checked = remember { mutableStateOf(false) }
 
                                     Row(verticalAlignment = Alignment.CenterVertically) {

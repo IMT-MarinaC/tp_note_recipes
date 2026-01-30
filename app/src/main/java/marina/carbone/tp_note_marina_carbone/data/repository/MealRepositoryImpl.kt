@@ -24,7 +24,7 @@ class MealRepositoryImpl(
 
     override suspend fun getMealById(mealId: String): Result<Meal> {
         return try {
-            val response = apiService.getMealById(mealId)  // MealListResponse
+            val response = apiService.getMealById(mealId)
             val meal = response.meals.firstOrNull()?.toDomain()
                 ?: throw Exception("Meal introuvable")
             Result.success(meal)
