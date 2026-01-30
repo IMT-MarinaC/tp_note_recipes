@@ -1,5 +1,7 @@
 package marina.carbone.tp_note_marina_carbone.ui.route.meal
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -128,6 +131,32 @@ fun MealScreen(
                     ) {
                         InfoTag(meal.category)
                         InfoTag(meal.area)
+                    }
+                }
+
+                item {
+                    val context = LocalContext.current
+                    val youtubeUrl = meal.youtubeUrl
+
+                    if (!youtubeUrl.isNullOrEmpty()) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(Dark)
+                                .clickable {
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeUrl))
+                                    context.startActivity(intent)
+                                }
+                                .padding(vertical = 12.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = "Voir la vidéo YouTube",
+                                color = Color.White,
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
                     }
                 }
 
